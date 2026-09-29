@@ -2,7 +2,7 @@
 
 Target: Minecraft Bedrock v26.52.
 
-MineHop recreates the *movement feel* of classic Counter-Strike bunnyhopping as closely as Bedrock scripting allows. The pack uses the Bedrock Script API for player input and movement. Microsoft documents `InputInfo.getMovementVector()` and `getButtonState()` for player input. citeturn1search1turn1search0
+MineHop recreates the *movement feel* of classic Counter-Strike bunnyhopping as closely as Bedrock scripting allows. The pack uses the Bedrock Script API for player input and movement. Microsoft documents `InputInfo.getMovementVector()` and `getButtonState()` for player input.
 
 ## What is new
 
@@ -52,7 +52,7 @@ INSTALL_MineHop.bat
 6. Windows/Minecraft should open the pack importer automatically.
 7. Activate the MineHop behavior pack in your world.
 
-A `.mcpack` is a ZIP-based Minecraft Bedrock pack format intended for transferring resource or behavior packs. citeturn0search14
+A `.mcpack` is a ZIP-based Minecraft Bedrock pack format intended for transferring resource or behavior packs.
 
 If Windows does not open Minecraft automatically, right-click the `.mcpack` and choose **Open with → Minecraft**.
 
@@ -78,7 +78,7 @@ minehop/
 └── README.md
 ```
 
-The manifest is the file Minecraft uses to identify and load the pack, and script modules declare their JavaScript entry point and Script API dependency. citeturn0search0turn0search2
+The manifest is the file Minecraft uses to identify and load the pack, and script modules declare their JavaScript entry point and Script API dependency.
 
 ## Important
 
