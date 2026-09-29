@@ -1,10 +1,13 @@
-// MineHop movement settings
-// Edit these numbers, then rebuild/repackage the add-on.
+// MineHop movement settings.
+// Edit ONLY this file to tune the movement.
 //
-// EASY PRESETS:
-// speed:        0.70 = slower / 0.95 = default / 1.20 = faster
-// air accel:    0.035 = floaty / 0.055 = default / 0.090 = strong
-// jump:        0.36 = low / 0.42 = default / 0.50 = high
+// MAX_SPEED:       maximum horizontal speed
+// GROUND_ACCEL:    acceleration on the ground
+// AIR_ACCEL:       acceleration while airborne / strafing
+// AIR_SPEED:       target air speed
+// GROUND_FRICTION: ground slowdown (higher = less slowdown)
+// JUMP_VELOCITY:   jump strength
+// AUTO_BHOP:       automatically jump while Jump is held
 
 export const SETTINGS = {
   MAX_SPEED: 0.95,
@@ -14,7 +17,5 @@ export const SETTINGS = {
   GROUND_FRICTION: 0.82,
   JUMP_VELOCITY: 0.42,
   MIN_MOVE: 0.05,
-
-  // Keep this true for automatic bunnyhopping while Jump is held.
   AUTO_BHOP: true
 };
