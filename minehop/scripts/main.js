@@ -1,19 +1,19 @@
 import { system, world } from "@minecraft/server";
+import { SETTINGS } from "../settings.js";
 
-// MineHop movement tuning.
-// These values are intentionally exposed so the movement can be tuned toward
-// classic CS-style bhop without replacing Minecraft's entire movement engine.
-const MAX_SPEED = 0.95;
-const GROUND_ACCEL = 0.085;
-const AIR_ACCEL = 0.055;
-const AIR_SPEED = 0.78;
-const GROUND_FRICTION = 0.82;
-const JUMP_VELOCITY = 0.42;
-const MIN_MOVE = 0.05;
+// MineHop reads every movement value from settings.js.
+// That file is the easy place to tune the bhop without touching this code.
 
-function clamp(value, min, max) {
-  return Math.max(min, Math.min(max, value));
-}
+const {
+  MAX_SPEED,
+  GROUND_ACCEL,
+  AIR_ACCEL,
+  AIR_SPEED,
+  GROUND_FRICTION,
+  JUMP_VELOCITY,
+  MIN_MOVE,
+  AUTO_BHOP
+} = SETTINGS;
 
 function horizontalSpeed(v) {
   return Math.sqrt(v.x * v.x + v.z * v.z);
@@ -30,16 +30,16 @@ function wishDirection(player) {
   const forward = input.y;
   const side = input.x;
 
-  // Convert local WASD input into world-space using the player's yaw.
   const yaw = player.getRotation().y * Math.PI / 180;
   const fx = -Math.sin(yaw);
   const fz = Math.cos(yaw);
   const rx = Math.cos(yaw);
   const rz = Math.sin(yaw);
 
-  const x = fx * forward + rx * side;
-  const z = fz * forward + rz * side;
-  return normalize(x, z);
+  return normalize(
+    fx * forward + rx * side,
+    fz * forward + rz * side
+  );
 }
 
 function isGrounded(player) {
@@ -83,33 +83,27 @@ function tickPlayer(player) {
   if (!player.isValid) return;
 
   const grounded = isGrounded(player);
-  const jumping = player.isJumping;
+  const jumping = player.inputInfo.getButtonState("Jump");
   const dir = wishDirection(player);
   const moving = Math.abs(dir.x) > MIN_MOVE || Math.abs(dir.z) > MIN_MOVE;
 
-  let v = player.getVelocity();
-
-  // CS-like ground friction: preserve speed while the player is actively
-  // bunnyhopping, but slow down when there is no movement input.
   if (grounded && !moving) {
+    const v = player.getVelocity();
     player.applyImpulse({
       x: -v.x * (1 - GROUND_FRICTION),
       y: 0,
       z: -v.z * (1 - GROUND_FRICTION)
     });
-    v = player.getVelocity();
   }
 
   if (grounded) {
     if (moving) accelerate(player, dir, MAX_SPEED, GROUND_ACCEL);
 
-    // Auto-bhop: holding Jump chains jumps on landing.
-    if (jumping) {
+    if (AUTO_BHOP && jumping) {
       player.applyImpulse({ x: 0, y: JUMP_VELOCITY, z: 0 });
     }
-  } else {
-    // Air acceleration is the important part of CS-style strafing.
-    if (moving) accelerate(player, dir, AIR_SPEED, AIR_ACCEL);
+  } else if (moving) {
+    accelerate(player, dir, AIR_SPEED, AIR_ACCEL);
   }
 
   limitSpeed(player);
