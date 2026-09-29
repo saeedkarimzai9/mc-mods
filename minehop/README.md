@@ -2,88 +2,58 @@
 
 Target: Minecraft Bedrock v26.52.
 
-MineHop recreates the *movement feel* of classic Counter-Strike bunnyhopping as closely as Bedrock scripting allows. The pack uses the Bedrock Script API for player input and movement. Microsoft documents `InputInfo.getMovementVector()` and `getButtonState()` for player input.
-
-## What is new
+## New in v1.0.1
 
 ### Easy movement settings
 
-You do **not** need to edit `scripts/main.js`.
+You no longer need to edit the main movement script.
 
 Open:
 
-`minehop/settings.js`
+    minehop/settings.js
 
-Change these values:
+Change:
 
-- `MAX_SPEED` — maximum horizontal speed
-- `GROUND_ACCEL` — acceleration while grounded
-- `AIR_ACCEL` — air/strafe acceleration
-- `AIR_SPEED` — target air speed
-- `GROUND_FRICTION` — how quickly you slow down on the ground
-- `JUMP_VELOCITY` — jump strength
-- `AUTO_BHOP` — `true` or `false`
+- MAX_SPEED — maximum horizontal speed
+- GROUND_ACCEL — ground acceleration
+- AIR_ACCEL — air/strafe acceleration
+- AIR_SPEED — target air speed
+- GROUND_FRICTION — ground slowdown
+- JUMP_VELOCITY — jump strength
+- AUTO_BHOP — automatic bunnyhop on/off
 
 Example:
 
-```js
-MAX_SPEED: 1.20,
-AIR_ACCEL: 0.080,
-JUMP_VELOCITY: 0.45,
-AUTO_BHOP: true
-```
+    MAX_SPEED: 1.20,
+    AIR_ACCEL: 0.080,
+    JUMP_VELOCITY: 0.45,
+    AUTO_BHOP: true
 
-After changing settings, you must rebuild/repackage the add-on before importing the updated version into Minecraft.
+After changing settings, rebuild/repackage the add-on before importing the updated pack.
 
-## Automatic import
+## One-click import
 
-The final distribution is designed to contain:
+The distribution is designed to contain:
 
-```text
-MineHop-CS-Style-Bhop-v1.0.1.mcpack
-INSTALL_MineHop.bat
-```
+    MineHop-CS-Style-Bhop-v1.0.1.mcpack
+    INSTALL_MineHop.bat
 
-1. Download the MineHop ZIP.
-2. Extract the ZIP.
-3. Open the extracted MineHop folder.
-4. Double-click **INSTALL_MineHop.bat**.
-5. The BAT file launches the `.mcpack` file.
-6. Windows/Minecraft should open the pack importer automatically.
-7. Activate the MineHop behavior pack in your world.
+Extract the downloaded ZIP, then double-click:
 
-A `.mcpack` is a ZIP-based Minecraft Bedrock pack format intended for transferring resource or behavior packs.
+    INSTALL_MineHop.bat
 
-If Windows does not open Minecraft automatically, right-click the `.mcpack` and choose **Open with → Minecraft**.
+The BAT file opens the .mcpack with Windows. If Minecraft is associated with .mcpack files, Minecraft will import it automatically.
 
-## In Minecraft
+## Minecraft setup
 
-1. Create or edit a world.
-2. Open **Behavior Packs**.
-3. Activate **MineHop - CS Style Bhop**.
-4. Enable any scripting/API option your particular Bedrock build asks for.
+1. Open or create a world.
+2. Go to Behavior Packs.
+3. Activate MineHop.
+4. Enable any scripting/API option your Bedrock build requests.
 5. Enter the world.
 6. Hold Jump while moving.
-7. Use A/D and mouse turning to practice air strafing.
-
-## Project layout
-
-```text
-minehop/
-├── manifest.json
-├── settings.js
-├── scripts/
-│   └── main.js
-├── INSTALL_MineHop.bat
-└── README.md
-```
-
-The manifest is the file Minecraft uses to identify and load the pack, and script modules declare their JavaScript entry point and Script API dependency.
+7. Use A/D plus mouse movement to practice air strafing.
 
 ## Important
 
-This is a **Bedrock recreation of CS-style bhop**, not the original Counter-Strike/Source engine. Bedrock's physics and Script API are different, so exact 1:1 Source-engine physics cannot be guaranteed.
-
-The GitHub repo is:
-
-https://github.com/saeedkarimzai9/mc-mods
+This is a Bedrock recreation of CS-style bunnyhop, not the original Counter-Strike/Source engine. Bedrock physics and the Script API are different, so exact 1:1 Source-engine physics cannot be guaranteed.
