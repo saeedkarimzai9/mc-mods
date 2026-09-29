@@ -1,0 +1,4 @@
+MineHop v1.0.0
+Minecraft Bedrock target: v26.52+
+Pack type: Behavior Pack with Script API
+Controls: Hold Jump + W/A/S/D to bunnyhop and air-strafe.
