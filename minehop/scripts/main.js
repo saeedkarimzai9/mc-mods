@@ -1,9 +1,6 @@
 import { system, world } from "@minecraft/server";
 import { SETTINGS } from "../settings.js";
 
-// MineHop reads every movement value from settings.js.
-// That file is the easy place to tune the bhop without touching this code.
-
 const {
   MAX_SPEED,
   GROUND_ACCEL,
@@ -29,8 +26,8 @@ function wishDirection(player) {
   const input = player.inputInfo.getMovementVector();
   const forward = input.y;
   const side = input.x;
-
   const yaw = player.getRotation().y * Math.PI / 180;
+
   const fx = -Math.sin(yaw);
   const fz = Math.cos(yaw);
   const rx = Math.cos(yaw);
@@ -56,9 +53,11 @@ function accelerate(player, dir, targetSpeed, acceleration) {
   const v = player.getVelocity();
   const currentAlongWish = v.x * dir.x + v.z * dir.z;
   const addSpeed = targetSpeed - currentAlongWish;
+
   if (addSpeed <= 0) return;
 
   const amount = Math.min(acceleration, addSpeed);
+
   player.applyImpulse({
     x: dir.x * amount,
     y: 0,
@@ -69,9 +68,11 @@ function accelerate(player, dir, targetSpeed, acceleration) {
 function limitSpeed(player) {
   const v = player.getVelocity();
   const speed = horizontalSpeed(v);
+
   if (speed <= MAX_SPEED) return;
 
   const scale = MAX_SPEED / speed;
+
   player.applyImpulse({
     x: v.x * (scale - 1),
     y: 0,
@@ -85,10 +86,13 @@ function tickPlayer(player) {
   const grounded = isGrounded(player);
   const jumping = player.inputInfo.getButtonState("Jump");
   const dir = wishDirection(player);
-  const moving = Math.abs(dir.x) > MIN_MOVE || Math.abs(dir.z) > MIN_MOVE;
+  const moving =
+    Math.abs(dir.x) > MIN_MOVE ||
+    Math.abs(dir.z) > MIN_MOVE;
 
   if (grounded && !moving) {
     const v = player.getVelocity();
+
     player.applyImpulse({
       x: -v.x * (1 - GROUND_FRICTION),
       y: 0,
@@ -97,10 +101,16 @@ function tickPlayer(player) {
   }
 
   if (grounded) {
-    if (moving) accelerate(player, dir, MAX_SPEED, GROUND_ACCEL);
+    if (moving) {
+      accelerate(player, dir, MAX_SPEED, GROUND_ACCEL);
+    }
 
     if (AUTO_BHOP && jumping) {
-      player.applyImpulse({ x: 0, y: JUMP_VELOCITY, z: 0 });
+      player.applyImpulse({
+        x: 0,
+        y: JUMP_VELOCITY,
+        z: 0
+      });
     }
   } else if (moving) {
     accelerate(player, dir, AIR_SPEED, AIR_ACCEL);
@@ -114,7 +124,7 @@ system.runInterval(() => {
     try {
       tickPlayer(player);
     } catch {
-      // Ignore a player that becomes invalid between ticks.
+      // Ignore players that become invalid between ticks.
     }
   }
 }, 1);
