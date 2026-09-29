@@ -4,7 +4,7 @@
     "name": "MineHop - CS Style Bhop",
     "description": "CS-style bunnyhop movement for Minecraft Bedrock v26.52.",
     "uuid": "7d3d6f17-9d67-4d58-ae4e-3c8f0a8c1d2b",
-    "version": [1, 0, 0],
+    "version": [1, 0, 1],
     "min_engine_version": [1, 26, 50]
   },
   "modules": [
@@ -12,7 +12,7 @@
       "type": "script",
       "language": "javascript",
       "uuid": "b1d7a9b2-6f35-4f7e-9a4a-7b8b8a0c4e11",
-      "version": [1, 0, 0],
+      "version": [1, 0, 1],
       "entry": "scripts/main.js"
     }
   ],
